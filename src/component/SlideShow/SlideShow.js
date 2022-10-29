@@ -11,6 +11,8 @@ import VideoSlideShow from "../VideoSlideShow";
 function SlideShow() {
   const [slide, setSlide] = useState([]);
   const [status, setStatus] = useState(false);
+  const [width, setWidth] = useState("w-100");
+  const [description, setDescription] = useState("");
 
   useEffect(() => {
     fetch("http://localhost:3001/random")
@@ -19,6 +21,15 @@ function SlideShow() {
         setSlide(slide[0]);
         setStatus(true);
       });
+  }, []);
+
+  useEffect(() => {
+    const timerId = setTimeout(() => {
+      setWidth("w-50");
+      setDescription("d-none");
+    }, 5000);
+
+    return () => clearTimeout(timerId);
   }, []);
 
   return (
@@ -34,7 +45,7 @@ function SlideShow() {
       )}
       <Container className="container-md">
         <div
-          className="position-absolute top-0 d-flex align-items-center h-100"
+          className="position-absolute top-0 d-flex  h-100 align-items-center"
           style={{ width: "40%" }}
         >
           <div className="w-100 text-light">
@@ -42,10 +53,10 @@ function SlideShow() {
               <img
                 src={require("../../asset/image/logo/" + slide.logo + ".webp")}
                 alt="logo"
-                className="w-100"
+                className={`${width}`}
               />
             )}
-            <p className="mt-3" style={{ fontSize: "1.2vw" }}>
+            <p className={`mt-3 ${description}`} style={{ fontSize: "1.2vw" }}>
               {slide.description}
             </p>
             <div className="mt-3">
