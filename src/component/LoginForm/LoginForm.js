@@ -1,25 +1,82 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
 import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
 
 function LoginForm() {
   const [form, setForm] = useState("Login");
+
+  const [email, setEmail] = useState("");
+
+  const [password, setPassword] = useState("");
+
+  const [confirmPassword, setConfirmPassword] = useState("");
+
+  const [error, setError] = useState("none");
+
+  const [users, setUsers] = useState([]);
+
+  const data = {
+    LastName: null,
+    FirstName: null,
+    Email: email,
+    Password: password,
+    PhoneNumber: null,
+    CreationDate: null,
+    LastUpdate: null,
+  };
+
+  function Register(data) {
+    const validate = users.some((user) => user.Email === data.Email);
+
+    if (password === confirmPassword && validate === false) {
+      fetch("http://localhost:3001/user", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(data),
+      })
+        .then((res) => res.json())
+        .then((datas) => {
+          setForm("Login");
+          setError("success");
+        });
+    }
+
+    if (password === confirmPassword && validate === true) {
+      setError("available");
+    }
+
+    if (password !== confirmPassword) {
+      setError("error");
+    }
+  }
+
+  useEffect(() => {
+    fetch("http://localhost:3001/user")
+      .then((res) => res.json())
+      .then((users) => {
+        setUsers(users);
+      });
+  }, []);
+
   return (
     <div>
       {form === "Login" && (
         <Form>
+          {error === "success" && (
+            <Form.Group className="mb-3">
+              <Form.Control placeholder="Đăng ký thành công" disabled />
+            </Form.Group>
+          )}
           <Form.Group className="mb-3" controlId="formBasicEmail">
             <Form.Label>Email address</Form.Label>
             <Form.Control type="email" placeholder="Enter email" />
           </Form.Group>
-
           <Form.Group className="mb-3" controlId="formBasicPassword">
             <Form.Label>Password</Form.Label>
             <Form.Control type="password" placeholder="Password" />
-          </Form.Group>
-          <Form.Group className="mb-3" controlId="formBasicCheckbox">
-            <Form.Check type="checkbox" label="Check me out" />
           </Form.Group>
           <Button variant="dark" type="submit">
             Đăng nhập
@@ -34,21 +91,51 @@ function LoginForm() {
         <Form>
           <Form.Group className="mb-3" controlId="formBasicEmail">
             <Form.Label>Email address</Form.Label>
-            <Form.Control type="email" placeholder="Enter email" />
+            <Form.Control
+              type="email"
+              placeholder="Enter email"
+              value={email}
+              onChange={(e) => {
+                setEmail(e.target.value);
+              }}
+            />
           </Form.Group>
-
           <Form.Group className="mb-3" controlId="formBasicPassword">
             <Form.Label>Password</Form.Label>
-            <Form.Control type="password" placeholder="Password" />
+            <Form.Control
+              type="password"
+              placeholder="Password"
+              value={password}
+              onChange={(e) => {
+                setPassword(e.target.value);
+              }}
+            />
           </Form.Group>
           <Form.Group className="mb-3" controlId="formBasicConfirmPassword">
             <Form.Label>Confirm Password</Form.Label>
-            <Form.Control type="password" placeholder="Password" />
+            <Form.Control
+              type="password"
+              placeholder="Confirm Password"
+              value={confirmPassword}
+              onChange={(e) => {
+                setConfirmPassword(e.target.value);
+              }}
+            />
           </Form.Group>
-          <Form.Group className="mb-3" controlId="formBasicCheckbox">
-            <Form.Check type="checkbox" label="Check me out" />
-          </Form.Group>
-          <Button variant="dark" type="submit">
+          {error === "error" && (
+            <Form.Group className="mb-3">
+              <Form.Control
+                placeholder="Mật khẩu và mật khẩu xác minh không khớp"
+                disabled
+              />
+            </Form.Group>
+          )}
+          {error === "available" && (
+            <Form.Group className="mb-3">
+              <Form.Control placeholder="Email đã tồn tại" disabled />
+            </Form.Group>
+          )}
+          <Button variant="dark" onClick={() => Register(data)}>
             Đăng ký
           </Button>
         </Form>

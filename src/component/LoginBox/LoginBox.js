@@ -12,8 +12,6 @@ function LoginBox(props) {
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
 
-  console.log(form);
-
   return (
     <div>
       <Button variant="dark" onClick={handleShow}>
