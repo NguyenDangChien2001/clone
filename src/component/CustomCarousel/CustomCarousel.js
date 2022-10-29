@@ -3,14 +3,37 @@ import CustomCard from "../CustomCard/CustomCard";
 import { Container } from "react-bootstrap";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
+import { useState, useEffect } from "react";
 
-function CustomCarousel(props) {
-  const datas = props.data;
+function CustomCarousel() {
+  const [datas, setDatas] = useState([]);
+
+  function chunkArray(myArray, chunk_size) {
+    var index = 0;
+    const arrayLength = myArray.length;
+    const tempArray = [];
+
+    for (index = 0; index < arrayLength; index += chunk_size) {
+      const myChunk = myArray.slice(index, index + chunk_size);
+      tempArray.push(myChunk);
+    }
+
+    return tempArray;
+  }
+
+  useEffect(() => {
+    fetch("http://localhost:3001/movie")
+      .then((res) => res.json())
+      .then((datas) => {
+        var result = chunkArray(datas, 6);
+        setDatas(result);
+      });
+  }, []);
 
   return (
     <div className="mb-5">
       <Container fluid="md" className="text-light">
-        <p>{props.type}</p>
+        <p>{datas.type}</p>
       </Container>
 
       <Carousel variant="light" pause="hover" indicators={false}>

@@ -6,6 +6,7 @@ import { faPlay } from "@fortawesome/free-solid-svg-icons";
 import { Container } from "react-bootstrap";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
+import { Link } from "react-router-dom";
 
 import CustomButton from "../CustomButton";
 
@@ -26,7 +27,9 @@ function ModalBox(props) {
         <Modal.Body className="bg-black px-0">
           <div className="position-relative">
             <video autoPlay muted className="w-100">
-              <source src={props.video} />
+              <source
+                src={require("../../asset/video/" + props.video + ".mp4")}
+              />
             </video>
 
             <div
@@ -35,15 +38,23 @@ function ModalBox(props) {
             >
               <Container className="container-md text-light">
                 <div className="w-100 text-light">
-                  <img src={props.image} alt="logo" className="w-100" />
+                  <img
+                    src={require("../../asset/image/logo/" +
+                      props.image +
+                      ".webp")}
+                    alt="logo"
+                    className="w-100"
+                  />
                   <p className="mt-3" style={{ fontSize: "1.2vw" }}>
                     {props.text}
                   </p>
                   <div className="mt-3">
-                    <CustomButton color="light">
-                      <FontAwesomeIcon icon={faPlay} />
-                      <span className="ms-3">Play</span>
-                    </CustomButton>
+                    <Link to={"/movie/" + props.id}>
+                      <CustomButton color="light">
+                        <FontAwesomeIcon icon={faPlay} />
+                        <span className="ms-3">Phát</span>
+                      </CustomButton>
+                    </Link>
                   </div>
                 </div>
               </Container>
@@ -55,7 +66,7 @@ function ModalBox(props) {
                 {props.description}
               </Col>
               <Col sm={4} className="text-light">
-                <span>Cast:</span>
+                {/* <span>Cast:</span>
                 <p>
                   {props.cast.map((eachCast, index) => (
                     <span key={index}>{eachCast}</span>
@@ -72,7 +83,7 @@ function ModalBox(props) {
                   {props.thisShowIs.map((eachCast, index) => (
                     <span key={index}>{eachCast}</span>
                   ))}
-                </p>
+                </p> */}
               </Col>
             </Row>
             <Row style={{ fontSize: "2rem" }}>

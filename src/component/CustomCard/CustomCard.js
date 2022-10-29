@@ -13,6 +13,7 @@ function CustomCard(props) {
       onClick={() => setHide(true)}
     >
       <ModalBox
+        id={props.data.id}
         video={props.data.trailer}
         image={props.data.logo}
         description={props.data.description}
@@ -26,11 +27,20 @@ function CustomCard(props) {
           className="card border-dark bg-dark text-light"
         >
           {hide && (
-            <Card.Img variant="top" src={props.data.image} role="button" />
+            <Card.Img
+              variant="top"
+              src={require("../../asset/image/" + props.data.image + ".jpg")}
+              role="button"
+            />
           )}
           {!hide && (
-            <video autoPlay muted className="w-100">
-              <source src={props.data.trailer} type="video/mp4" />
+            <video autoPlay className="w-100">
+              <source
+                src={require("../../asset/video/" +
+                  props.data.trailer +
+                  ".mp4")}
+                type="video/mp4"
+              />
             </video>
           )}
         </Card>

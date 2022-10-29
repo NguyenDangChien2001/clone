@@ -1,6 +1,6 @@
 const images = {
-  logoNeFlix: require("./image/Logonetflix.png"),
-  logoAthena: require("./image/logo-athena.webp"),
+  logoNeFlix: require("./image/logo-netflix/Logonetflix.png"),
+
   CuocGiaiCuuHangThaiLan: require("./image/CuocGiaiCuuHangThaiLan.jpg"),
   CyberPunk: require("./image/CyberPunk.jpg"),
   Dahmer: require("./image/Dahmer.jpg"),
@@ -9,9 +9,6 @@ const images = {
 };
 
 const videos = {
-  denDaKoDuong: require("./video/den-da-ko-duong.mp4"),
-  anhNhaODauThe: require("./video/anh-nha-o-dau-the.mp4"),
-  Athena: require("./video/Athena.mp4"),
   AthenaTrailer: require("./video/Athena-trailer.mp4"),
 };
 
