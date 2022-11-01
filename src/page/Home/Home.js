@@ -17,8 +17,6 @@ function Home() {
   //       thisShowIs: ["Dark", "Horror"],
   //     },
 
-  const type = "New Bonus";
-
   return (
     <div>
       <SlideShow />

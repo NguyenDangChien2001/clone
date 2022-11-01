@@ -4,14 +4,13 @@ import { RecaptchaVerifier, signInWithPhoneNumber } from "firebase/auth";
 
 import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
+import UserBox from "../UserBox";
 
 function LoginOTP() {
   const [phoneNumber, setPhoneNumber] = useState("");
   const [otp, setOtp] = useState("");
   const [step, setStep] = useState("INPUT_PHONE_NUMBER");
   const [result, setResult] = useState("");
-
-  console.log(phoneNumber);
 
   const signin = () => {
     if (phoneNumber === "") return;
@@ -43,6 +42,7 @@ function LoginOTP() {
       .confirm(otp)
       .then((result) => {
         setStep("VERIFY_SUCCESS");
+        sessionStorage.setItem("phone", phoneNumber);
       })
       .catch((err) => {
         alert("Incorrect code");
@@ -87,7 +87,7 @@ function LoginOTP() {
         </div>
       )}
 
-      {step === "VERIFY_SUCCESS" && <h3>Verify success</h3>}
+      {step === "VERIFY_SUCCESS" && <UserBox />}
 
       {step === "VERIFY_FAIL" && <h3>Verify Fail</h3>}
     </Form>

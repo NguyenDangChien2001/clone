@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 
 import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
+import UserBox from "../UserBox";
 
 function LoginForm() {
   const [form, setForm] = useState("Login");
@@ -25,6 +26,14 @@ function LoginForm() {
     CreationDate: null,
     LastUpdate: null,
   };
+
+  useEffect(() => {
+    fetch("http://localhost:3001/user")
+      .then((res) => res.json())
+      .then((users) => {
+        setUsers(users);
+      });
+  }, []);
 
   function Register(data) {
     const validate = users.some((user) => user.Email === data.Email);
@@ -53,13 +62,23 @@ function LoginForm() {
     }
   }
 
-  useEffect(() => {
-    fetch("http://localhost:3001/user")
-      .then((res) => res.json())
-      .then((users) => {
-        setUsers(users);
+  function Login(data) {
+    const loginSuccess = users.some(
+      (user) => user.Email === data.Email && user.Password === data.Password
+    );
+
+    if (loginSuccess === true) {
+      setError("");
+      users.forEach((user) => {
+        if (user.Email === data.Email && user.Password === data.Password) {
+          sessionStorage.setItem("id", user.id);
+          setForm("user");
+        }
       });
-  }, []);
+    } else {
+      setError("loginFail");
+    }
+  }
 
   return (
     <div>
@@ -72,13 +91,35 @@ function LoginForm() {
           )}
           <Form.Group className="mb-3" controlId="formBasicEmail">
             <Form.Label>Email address</Form.Label>
-            <Form.Control type="email" placeholder="Enter email" />
+            <Form.Control
+              type="email"
+              placeholder="Enter email"
+              value={email}
+              onChange={(e) => {
+                setEmail(e.target.value);
+              }}
+            />
           </Form.Group>
           <Form.Group className="mb-3" controlId="formBasicPassword">
             <Form.Label>Password</Form.Label>
-            <Form.Control type="password" placeholder="Password" />
+            <Form.Control
+              type="password"
+              placeholder="Password"
+              value={password}
+              onChange={(e) => {
+                setPassword(e.target.value);
+              }}
+            />
           </Form.Group>
-          <Button variant="dark" type="submit">
+          {error === "loginFail" && (
+            <Form.Group className="mb-3">
+              <Form.Control
+                placeholder="Email hoặc mật khẩu không đúng"
+                disabled
+              />
+            </Form.Group>
+          )}
+          <Button variant="dark" onClick={() => Login(data)}>
             Đăng nhập
           </Button>
           <Button variant="dark" onClick={() => setForm("Register")}>
@@ -140,6 +181,7 @@ function LoginForm() {
           </Button>
         </Form>
       )}
+      {form === "user" && <UserBox />}
     </div>
   );
 }

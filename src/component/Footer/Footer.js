@@ -11,7 +11,7 @@ import { Link } from "react-router-dom";
 function Footer() {
   const facebook = "#";
   return (
-    <div className="container my-5">
+    <div className="container mt-5">
       <footer className="text-center text-lg-start text-white">
         <section className="d-flex justify-content-between p-4">
           <div style={{ fontSize: "2rem" }}>

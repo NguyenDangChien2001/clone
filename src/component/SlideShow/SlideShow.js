@@ -60,7 +60,7 @@ function SlideShow() {
               {slide.description}
             </p>
             <div className="mt-3">
-              <Link to={"/movie/" + slide.id}>
+              <Link to={"/movie/" + slide.id + "/1"}>
                 <CustomButton color="light">
                   <FontAwesomeIcon icon={faPlay} />
                   <span className="ms-3">Phát</span>

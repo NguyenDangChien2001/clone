@@ -25,7 +25,7 @@ function LoginBox(props) {
         keyboard={false}
       >
         <Modal.Header closeButton>
-          <Modal.Title>Đăng nhập</Modal.Title>
+          <Modal.Title>Người dùng</Modal.Title>
         </Modal.Header>
         <Modal.Body>
           {form === "" && (
@@ -46,7 +46,6 @@ function LoginBox(props) {
               </Button>
             </div>
           )}
-
           {form === "OTPForm" && <LoginOTP />}
           {form === "LoginForm" && <LoginForm />}
         </Modal.Body>
@@ -56,6 +55,7 @@ function LoginBox(props) {
               variant="dark"
               onClick={() => {
                 setForm("");
+                sessionStorage.clear();
               }}
             >
               Quay lại

@@ -16,6 +16,7 @@ import {
 import { publicRoutes } from "../../routes";
 import { images } from "../../asset";
 import LoginBox from "../LoginBox";
+import SearchBox from "../SearchBox/SearchBox";
 
 function Header() {
   return (
@@ -52,14 +53,9 @@ function Header() {
         </Nav>
 
         <Nav className="ms-auto">
-          <OverlayTrigger
-            placement="bottom"
-            overlay={<Tooltip id={`tooltip-bottom`}>Tìm kiếm</Tooltip>}
-          >
-            <Button variant="dark">
-              <FontAwesomeIcon icon={faMagnifyingGlass} />
-            </Button>
-          </OverlayTrigger>
+          <SearchBox>
+            <FontAwesomeIcon icon={faMagnifyingGlass} />
+          </SearchBox>
           <OverlayTrigger
             placement="bottom"
             overlay={<Tooltip id={`tooltip-bottom`}>Thông báo</Tooltip>}
