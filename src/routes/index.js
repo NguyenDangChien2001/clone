@@ -6,6 +6,7 @@ import MyList from "../page/MyList";
 import Movie from "../page/Movie";
 import Lander from "../page/Lander";
 import Search from "../page/Search";
+import Login from "../page/Login";
 
 const publicRoutes = [
   { path: "/", component: Home, layout: DefaultLayout, name: "Trang chủ" },
@@ -28,6 +29,11 @@ const publicRoutes = [
   {
     path: "/search/:title",
     component: Search,
+    layout: DefaultLayout,
+  },
+  {
+    path: "/Login",
+    component: Login,
     layout: DefaultLayout,
   },
 ];

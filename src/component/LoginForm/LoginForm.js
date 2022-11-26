@@ -5,7 +5,12 @@ import Button from "react-bootstrap/Button";
 import UserBox from "../UserBox";
 
 function LoginForm() {
-  const [form, setForm] = useState("Login");
+  const [form, setForm] = useState(() => {
+    if (sessionStorage.length > 0) {
+      return "user";
+    }
+    return "Login";
+  });
 
   const [email, setEmail] = useState("");
 

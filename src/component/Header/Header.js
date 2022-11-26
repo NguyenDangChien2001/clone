@@ -20,7 +20,7 @@ import SearchBox from "../SearchBox/SearchBox";
 
 function Header() {
   return (
-    <Navbar bg="dark" variant="dark" fixed="top">
+    <Navbar bg="dark" variant="dark" sticky="top">
       <Container fluid="md">
         <Navbar.Brand as={Link} to="/">
           <img src={images.logoNeFlix} alt="logo" width={100} />
@@ -65,9 +65,11 @@ function Header() {
             </Button>
           </OverlayTrigger>
 
-          <LoginBox>
-            <FontAwesomeIcon icon={faUser} />
-          </LoginBox>
+          <Link to="/Login">
+            <Button variant="dark">
+              <FontAwesomeIcon icon={faUser} />
+            </Button>
+          </Link>
         </Nav>
       </Container>
     </Navbar>

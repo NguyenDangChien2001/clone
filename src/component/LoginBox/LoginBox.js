@@ -49,7 +49,7 @@ function LoginBox(props) {
           {form === "OTPForm" && <LoginOTP />}
           {form === "LoginForm" && <LoginForm />}
         </Modal.Body>
-        {form !== "" && (
+        {form === "LoginForm" && (
           <Modal.Footer>
             <Button
               variant="dark"

@@ -1,20 +1,49 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Button from "react-bootstrap/Button";
 import Modal from "react-bootstrap/Modal";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faPlay } from "@fortawesome/free-solid-svg-icons";
+import { faPlay, faHeart } from "@fortawesome/free-solid-svg-icons";
 import { Container } from "react-bootstrap";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import { Link } from "react-router-dom";
 
+import ListEpisode from "../ListEpisode";
 import CustomButton from "../CustomButton";
 
 function ModalBox(props) {
   const [show, setShow] = useState(false);
-
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
+  const [res, setRes] = useState("Thêm vào danh sách yêu thích");
+  const [datas, setDatas] = useState([]);
+
+  useEffect(() => {
+    fetch(`http://localhost:3001/episode/${props.id}`)
+      .then((res) => res.json())
+      .then((datas) => {
+        setDatas(datas);
+      });
+  }, [props.id]);
+
+  const data = {
+    idMovie: props.id,
+    idUser: sessionStorage.getItem("id"),
+  };
+
+  function handleAddToList() {
+    fetch(`http://localhost:3001/list/${data.idUser}`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(data),
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        setRes(data.message);
+      });
+  }
 
   return (
     <>
@@ -55,6 +84,15 @@ function ModalBox(props) {
                         <span className="ms-3">Phát</span>
                       </CustomButton>
                     </Link>
+                    {sessionStorage.length > 0 && (
+                      <CustomButton
+                        color="dark"
+                        onClick={() => handleAddToList()}
+                      >
+                        <FontAwesomeIcon icon={faHeart} />
+                        <span className="ms-3">{`${res}`}</span>
+                      </CustomButton>
+                    )}
                   </div>
                 </div>
               </Container>
@@ -94,6 +132,9 @@ function ModalBox(props) {
             </Row>
             <div>
               <div></div>
+            </div>
+            <div className="text-dark">
+              <ListEpisode data={datas} />
             </div>
           </Container>
         </Modal.Body>

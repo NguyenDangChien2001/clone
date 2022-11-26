@@ -44,6 +44,14 @@ function CustomCarousel() {
   return (
     <div className="mb-5">
       <Container fluid="md" className="text-light py-3">
+        <CustomButton
+          color={"light"}
+          onClick={() => {
+            setType("");
+          }}
+        >
+          All
+        </CustomButton>
         {types.map((type, index) => (
           <CustomButton
             key={type.id}
